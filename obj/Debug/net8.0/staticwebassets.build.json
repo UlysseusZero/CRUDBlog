@@ -1,0 +1,77 @@
+{
+  "Version": 1,
+  "Hash": "s3bXA3T7BviuhBjGsdkRd7b0hbmOIZXNbvTZ+8en10k=",
+  "Source": "FortressTrialTask_JanJeffersonLam",
+  "BasePath": "_content/FortressTrialTask_JanJeffersonLam",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "FortressTrialTask_JanJeffersonLam\\wwwroot",
+      "Source": "FortressTrialTask_JanJeffersonLam",
+      "ContentRoot": "D:\\Website Stuffs\\FortressTrialTask_JanJeffersonLam\\wwwroot\\",
+      "BasePath": "_content/FortressTrialTask_JanJeffersonLam",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "D:\\Website Stuffs\\FortressTrialTask_JanJeffersonLam\\wwwroot\\index.html",
+      "SourceId": "FortressTrialTask_JanJeffersonLam",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Website Stuffs\\FortressTrialTask_JanJeffersonLam\\wwwroot\\",
+      "BasePath": "_content/FortressTrialTask_JanJeffersonLam",
+      "RelativePath": "index.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\index.html"
+    },
+    {
+      "Identity": "D:\\Website Stuffs\\FortressTrialTask_JanJeffersonLam\\wwwroot\\login.html",
+      "SourceId": "FortressTrialTask_JanJeffersonLam",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Website Stuffs\\FortressTrialTask_JanJeffersonLam\\wwwroot\\",
+      "BasePath": "_content/FortressTrialTask_JanJeffersonLam",
+      "RelativePath": "login.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\login.html"
+    },
+    {
+      "Identity": "D:\\Website Stuffs\\FortressTrialTask_JanJeffersonLam\\wwwroot\\register.html",
+      "SourceId": "FortressTrialTask_JanJeffersonLam",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Website Stuffs\\FortressTrialTask_JanJeffersonLam\\wwwroot\\",
+      "BasePath": "_content/FortressTrialTask_JanJeffersonLam",
+      "RelativePath": "register.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\register.html"
+    }
+  ]
+}

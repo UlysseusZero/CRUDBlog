@@ -1,0 +1,490 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulletin Board</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .modal-content {
+            border-radius: 1rem;
+        }
+
+        .modal-backdrop {
+            display: none; /* Ensures backdrop is hidden */
+            opacity: 0; /* Ensures no transparency */
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Bulletin Board</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="user-profile-link" style="display:none;">User Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="logout-link" style="display:none;">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <header class="mb-4">
+            <div class="d-flex justify-content-between mb-3">
+                <div>
+                    <strong>DATE TODAY: <span id="current-date"></span></strong>
+                </div>
+                <div>
+                    <h2>Posts: <span id="post-count">0</span></h2>
+                    <h2>Users: <span id="user-count">0</span></h2>
+                </div>
+            </div>
+        </header>
+        <button id="add-blog-btn" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addBlogModal">Add Blog</button>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Blog Title</th>
+                    <th>Author</th>
+                    <th>Date Posted</th>
+                    <th>Content</th>
+                </tr>
+            </thead>
+            <tbody id="post-table-body">
+                <!-- Blog posts will be dynamically inserted here -->
+            </tbody>
+        </table>
+
+        <nav aria-label="Page navigation">
+            <ul class="pagination" id="pagination">
+                <!-- Pagination will be dynamically inserted here -->
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label for="loginEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="loginEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="loginPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="loginPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="registerModalLabel">Register</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="registerForm">
+                        <div class="mb-3">
+                            <label for="registerFirstName" class="form-label">First Name</label>
+                            <input type="text" class="form-control" id="registerFirstName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerLastName" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" id="registerLastName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="registerEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="registerPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Blog Modal -->
+    <div class="modal fade" id="addBlogModal" tabindex="-1" aria-labelledby="addBlogModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addBlogModalLabel">Add Blog Post</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addBlogForm">
+                        <div class="mb-3">
+                            <label for="blogTitle" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="blogTitle" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="blogContent" class="form-label">Content</label>
+                            <textarea class="form-control" id="blogContent" rows="3" required></textarea>
+                        </div>
+                        <input type="hidden" id="blogAuthor">
+                        <input type="hidden" id="blogDatePosted">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="submitBlog">Save Blog</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const apiBaseUrl = 'https://localhost:7231';
+            const postTableBody = document.getElementById('post-table-body');
+            const postCountElement = document.getElementById('post-count');
+            const userCountElement = document.getElementById('user-count');
+            const currentDateElement = document.getElementById('current-date');
+            const logoutLink = document.getElementById('logout-link');
+            const userProfileLink = document.getElementById('user-profile-link');
+            const addBlogModal = new bootstrap.Modal(document.getElementById('addBlogModal'));
+            const submitBlogButton = document.getElementById('submitBlog');
+            const blogAuthorInput = document.getElementById('blogAuthor');
+            const blogDatePostedInput = document.getElementById('blogDatePosted');
+
+            
+
+            async function fetchPosts() {
+                try {
+                    const response = await fetch(`${apiBaseUrl}/api/blog`);
+                    const contentType = response.headers.get('content-type');
+
+                    if (response.ok) {
+                        if (contentType && contentType.includes('application/json')) {
+                            const data = await response.json();
+                            console.log('Fetched data:', data); // Debugging line
+                            updatePosts(data.post); // Access the 'post' property
+                        } else {
+                            const responseText = await response.text();
+                            console.error('Expected JSON but received:', responseText);
+                            throw new Error('Unexpected response format.');
+                        }
+                    } else {
+                        const responseText = await response.text();
+                        console.error('API responded with an error:', responseText);
+                        throw new Error('Failed to fetch posts.');
+                    }
+                } catch (error) {
+                    console.error('Error fetching posts:', error);
+                }
+            }
+
+            function updatePosts(posts) {
+                if (Array.isArray(posts)) { // Ensure that posts is an array
+                    postTableBody.innerHTML = '';
+                    posts.forEach(post => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                                            <td>${post.id}</td>
+                                            <td>${post.title}</td>
+                                            <td>${post.author}</td>
+                                            <td>${new Date(post.datePosted).toLocaleDateString()}</td>
+                                            <td>${post.content}</td>
+                                        `;
+                        postTableBody.appendChild(tr);
+                    });
+                    postCountElement.textContent = posts.length;
+                } else {
+                    console.error('Posts is not an array:', posts); // Debugging line
+                }
+            }
+
+            async function fetchUserCount() {
+                try {
+                    const response = await fetch(`${apiBaseUrl}/api/account/users/count`);
+                    const data = await response.json();
+                    userCountElement.textContent = data.count;
+                } catch (error) {
+                    console.error('Error fetching user count:', error);
+                }
+            }
+
+            function updateDate() {
+                const today = new Date();
+                currentDateElement.textContent = today.toDateString();
+            }
+
+            async function loginUser() {
+                try {
+                    const response = await fetch(`${apiBaseUrl}/api/account/login`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            email: document.getElementById('loginEmail').value,
+                            password: document.getElementById('loginPassword').value
+                        })
+                    });
+
+                    const contentType = response.headers.get('content-type');
+                    let responseBody = {};
+
+                    if (contentType && contentType.includes('application/json')) {
+                        responseBody = await response.json();
+                    } else {
+                        responseBody = await response.text();
+                        console.error('Expected JSON but received:', responseBody);
+                        throw new Error('Unexpected response format.');
+                    }
+
+                    if (!response.ok) {
+                        throw new Error(responseBody.message || 'Login failed');
+                    }
+
+                    console.log('Login successful:', responseBody);
+                    alert(responseBody.message || 'Login Successful!');
+
+                    // Store user data in local storage
+                    const user = {
+                        id: responseBody.user.id,
+                        email: responseBody.user.email
+                    };
+                    localStorage.setItem('user', JSON.stringify(user));
+
+                    // Update UI after successful login
+                    updateUI();
+
+                    // Hide modal and remove backdrop
+                    const loginModal = document.getElementById('loginModal');
+                    if (loginModal) {
+                        const modal = new bootstrap.Modal(loginModal);
+                        modal.hide(); // Hide the modal
+
+                        // Ensure the backdrop is removed
+                        const backdrop = document.querySelector('.modal-backdrop');
+                        if (backdrop) {
+                            backdrop.classList.remove('show'); // Hide backdrop
+                            backdrop.remove(); // Remove backdrop from DOM
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error logging in user:', error);
+                    alert('Login failed: ' + error.message);
+                }
+            }
+
+
+
+
+            async function registerUser() {
+                try {
+                    const response = await fetch(`${apiBaseUrl}/api/account/register`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            firstName: document.getElementById('registerFirstName').value,
+                            lastName: document.getElementById('registerLastName').value,
+                            email: document.getElementById('registerEmail').value,
+                            password: document.getElementById('registerPassword').value
+                        })
+                    });
+
+                    if (response.ok) {
+                        alert('Registration successful! Please log in.');
+                        const modal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
+                        modal.hide();
+                    } else {
+                        alert('Registration failed');
+                    }
+                } catch (error) {
+                    console.error('Error during registration:', error);
+                }
+            }
+
+            function updateUIOnLogout() {
+                const loginLink = document.querySelector('.nav-link[href="#loginModal"]');
+                const registerLink = document.querySelector('.nav-link[href="#registerModal"]');
+                if (loginLink) {
+                    loginLink.style.display = 'inline';
+                }
+                if (registerLink) {
+                    registerLink.style.display = 'inline';
+                }
+                if (logoutLink) {
+                    logoutLink.style.display = 'none';
+                }
+                if (userProfileLink) {
+                    userProfileLink.style.display = 'none';
+                }
+            }
+
+            function handleLogout() {
+                localStorage.removeItem('user');
+                updateUIOnLogout();
+                fetchPosts();
+                fetchUserCount();
+            }
+
+            function updateUI() {
+                const user = JSON.parse(localStorage.getItem('user'));
+                console.log('User from localStorage:', user);
+
+                const loginLink = document.querySelector('.nav-link[href="#loginModal"]');
+                const registerLink = document.querySelector('.nav-link[href="#registerModal"]');
+                const logoutLink = document.getElementById('logout-link');
+                const userProfileLink = document.getElementById('user-profile-link');
+                const addBlogButton = document.getElementById('add-blog-btn'); // Ensure this ID is correct
+
+                console.log('loginLink:', loginLink);
+                console.log('registerLink:', registerLink);
+                console.log('logoutLink:', logoutLink);
+                console.log('userProfileLink:', userProfileLink);
+                console.log('addBlogButton:', addBlogButton);
+
+                if (user) {
+                    if (loginLink) loginLink.style.display = 'none';
+                    if (registerLink) registerLink.style.display = 'none';
+                    if (logoutLink) logoutLink.style.display = 'inline';
+                    if (userProfileLink) userProfileLink.style.display = 'inline';
+                    if (addBlogButton) addBlogButton.style.display = 'inline'; // Show the button for logged-in users
+                } else {
+                    if (loginLink) loginLink.style.display = 'inline';
+                    if (registerLink) registerLink.style.display = 'inline';
+                    if (logoutLink) logoutLink.style.display = 'none';
+                    if (userProfileLink) userProfileLink.style.display = 'none';
+                    if (addBlogButton) addBlogButton.style.display = 'none'; // Hide the button for logged-out users
+                }
+            }
+
+            function setModalDefaults() {
+                const user = JSON.parse(localStorage.getItem('user'));
+                const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+                if (user) {
+                    blogAuthorInput.value = user.email; // Set the author to the logged-in user's email or name
+                } else {
+                    blogAuthorInput.value = 'Anonymous'; // Default value if no user is logged in
+                }
+                blogDatePostedInput.value = today; // Set today's date
+            }
+
+            document.getElementById('addBlogModal').addEventListener('show.bs.modal', setModalDefaults);
+
+            submitBlogButton.addEventListener('click', async () => {
+                const title = document.getElementById('blogTitle').value;
+                const content = document.getElementById('blogContent').value;
+                const datePosted = new Date().toISOString(); // Get current date in ISO format
+
+                const user = JSON.parse(localStorage.getItem('user'));
+                console.log('Logged in user:', user); // Debugging line
+
+                if (!user || !user.id) {
+                    alert('You must be logged in to add a blog post.');
+                    return;
+                }
+
+                // Construct the blog post object
+                const blogPost = {
+                    title: title,
+                    content: content,
+                    datePosted: datePosted,
+                    userId: user.id // Ensure userId is being sent
+                };
+
+                try {
+                    const response = await fetch(`${apiBaseUrl}/api/blog`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(blogPost)
+                    });
+
+                    if (response.ok) {
+                        alert('Blog post added successfully!');
+                        // Hide the modal
+                        addBlogModal.hide();
+                        // Optionally, refresh the posts list
+                        fetchPosts();
+                    } else {
+                        const errorText = await response.text();
+                        console.error('Failed to add blog post:', errorText);
+                        alert('Failed to add blog post.');
+                    }
+                } catch (error) {
+                    console.error('Error submitting blog post:', error);
+                    alert('Error submitting blog post: ' + error.message);
+                }
+            });
+
+
+
+
+
+            document.addEventListener('hidden.bs.modal', function (event) {
+                // Ensure that the backdrop is hidden after the modal is closed
+                const backdrop = document.querySelector('.modal-backdrop');
+                if (backdrop) {
+                    backdrop.style.display = 'none';
+                }
+            });
+
+
+
+            document.getElementById('loginForm').addEventListener('submit', (event) => {
+                event.preventDefault();
+                loginUser();
+            });
+
+            document.getElementById('registerForm').addEventListener('submit', (event) => {
+                event.preventDefault();
+                registerUser();
+            });
+
+            if (logoutLink) {
+                logoutLink.addEventListener('click', handleLogout);
+            }
+
+            updateDate();
+            fetchPosts();
+            fetchUserCount();
+            updateUI();
+        });
+    </script>
+</body>
+</html>

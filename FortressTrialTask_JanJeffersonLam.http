@@ -1,0 +1,6 @@
+@FortressTrialTask_JanJeffersonLam_HostAddress = http://localhost:5291
+
+GET {{FortressTrialTask_JanJeffersonLam_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
